@@ -1,0 +1,22 @@
+regresja symboliczna
+
+własny język programowania - zespoły dwuosobowe
+
+TinyGP
+
+konsultacje - wtorek ok. 17:15-18:15
+
+dpalka@agh.edu.pl
+
+gp:
+kierowane wyszukiwanie losowe (guided random search)
+wykorzystujące populację osobników (rozwiązań)
+metoda inspirowana ewolucją naturalną:
+	-osobniki lepiej przystosowane do środowiska mają większe szanse na reprodukcję i przekazanie swoich genów
+	- funkcja dopasowana - ocena osobników
+	- operatory pozwalające na zmianę rozwiązania
+-----------------------------------------------------------------
+kiedy gp jest szczególnie użyteczne
+olbrzymia przestrzeń poszukiwań
+dokładna postać rozwiązania nie jest znana
+można zaakceptować rozwiązanie przybliżone
