@@ -1,0 +1,23 @@
+[
+    {
+        "generation": 0,
+        "avg_program_length": 13.4072,
+        "best_individual": "((((-3.9213208489477935  * X2 ) - X1 ) * 0.14157835199589464 ) * -4.314997182861564 )",
+        "avg_fitness": 8.068847689095409E7,
+        "best_fitness": 333.6446132192185
+    },
+    {
+        "generation": 1,
+        "avg_program_length": 10.481,
+        "best_individual": "((((-3.9213208489477935  * X2 ) - X1 ) * 0.14157835199589464 ) * -4.314997182861564 )",
+        "avg_fitness": 216865.4554609518,
+        "best_fitness": 333.6446132192185
+    },
+    {
+        "generation": 2,
+        "avg_program_length": 9.8622,
+        "best_individual": "((X1  + X2 ) + X2 )",
+        "avg_fitness": 72230.00601974764,
+        "best_fitness": 1.0881573420107316E-13
+    }
+]
