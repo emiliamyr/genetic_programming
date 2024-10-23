@@ -11,7 +11,7 @@ public class TinyGP {
     private static final int ADD = 110, SUB = 111, MUL = 112, DIV = 113;
     private static final int FSET_START = ADD, FSET_END = DIV;
 
-    private static final int MAX_LEN = 100, POP_SIZE = 10000, DEPTH = 2, GENERATIONS = 100, TOURNAMENT_SIZE = 2;
+    private static final int MAX_LEN = 100, POP_SIZE = 1000, DEPTH = 2, GENERATIONS = 100, TOURNAMENT_SIZE = 2;
     private static final double PMUT_PER_NODE = 0.05, CROSSOVER_PROB = 0.9;
     private static final double []inputs = new double[FSET_START];
     private static double minRandom, maxRandom;
@@ -23,7 +23,6 @@ public class TinyGP {
     private static double averageProgramLength;
     private static double[][] targetData;
 
-    // Obiekt JSON do przechowywania wszystkich generacji
     private JSONArray generationsData;
 
     public TinyGP(String fileName, long seedValue){
@@ -54,7 +53,6 @@ public class TinyGP {
         TinyGP gp = new TinyGP(fileName, seedValue);
         gp.evolve();
 
-        // Zapis danych do pliku JSON po zakończeniu ewolucji
         gp.saveOutputToJson("output.json");
     }
 
@@ -263,7 +261,6 @@ public class TinyGP {
         averageProgramLength = (double) nodeCount / POP_SIZE;
         averageFitnessInPopulation /= POP_SIZE;
 
-        // Konstruujemy obiekt JSON dla bieżącej generacji
         JSONObject generationData = new JSONObject();
         generationData.put("generation", generation);
         generationData.put("avg_fitness", -averageFitnessInPopulation);
@@ -273,7 +270,6 @@ public class TinyGP {
         String bestIndividualString = individualToString(population[bestIndividualIndex], 0);
         generationData.put("best_individual", bestIndividualString);
 
-        // Dodajemy dane generacji do głównej listy
         generationsData.put(generationData);
     }
 
@@ -286,13 +282,13 @@ public class TinyGP {
             } else {
                 sb.append(inputs[program[index]]).append(" ");
             }
-            return sb.toString(); // Zwróć ciąg znaków z odpowiednim indeksem zmiennej lub stałej
+            return sb.toString();
         }
 
         switch (program[index]) {
             case ADD:
                 sb.append("(");
-                sb.append(individualToString(program, index + 1)); // Rekurencyjne generowanie dla lewej strony
+                sb.append(individualToString(program, index + 1));
                 sb.append(" + ");
                 break;
             case SUB:
@@ -312,7 +308,7 @@ public class TinyGP {
                 break;
         }
 
-        sb.append(individualToString(program, traverseProgram(program, index + 1))); // Rekurencyjne generowanie dla prawej strony
+        sb.append(individualToString(program, traverseProgram(program, index + 1)));
         sb.append(")");
         return sb.toString();
     }
@@ -353,10 +349,9 @@ public class TinyGP {
 
     private static char[] buffer = new char[MAX_LEN];
 
-    // Zapis danych do pliku JSON
     public void saveOutputToJson(String filename) {
         try (FileWriter file = new FileWriter(filename)) {
-            file.write(generationsData.toString(4)); // Formatowanie z wcięciem dla lepszej czytelności
+            file.write(generationsData.toString(4));
             System.out.println("Zapisano dane do pliku " + filename);
         } catch (IOException e) {
             e.printStackTrace();
