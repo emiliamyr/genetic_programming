@@ -25,6 +25,12 @@ def f5(x):
 def f6(x, y):
     return x ** 2 + 3 * x * y - 7 * y + 1
 
+def f7(x):
+    return np.sin(x + 4.141592/2)
+
+def f8(x):
+    return np.tan(2*x + 1)
+
 
 def save_data_to_file(data, filename, folder, nvar, nrand=10, minrand=-10.0, maxrand=10.0):
     os.makedirs(folder, exist_ok=True)
@@ -78,6 +84,12 @@ def generate_data_for_different_domains():
             (np.linspace(-1, 1, 50), np.linspace(-1, 1, 50)),
             (np.linspace(-1000, 1000, 50), np.linspace(-1000, 1000, 50)),
         ],
+        "f7":[
+            (np.linspace(-3.14, 3.14, 100))
+        ],
+        "f8":[
+            (np.linspace(-3.14, 3.14, 100))
+        ]
     }
 
     results = {}
@@ -91,7 +103,8 @@ def generate_data_for_different_domains():
                      domains['f4']]
     results['f6'] = [(np.meshgrid(domain[0], domain[1]), f6(*np.meshgrid(domain[0], domain[1]))) for domain in
                      domains['f6']]
-
+    results['f7'] = [(domain, f7(domain)) for domain in domains['f7']]
+    results['f8'] = [(domain, f8(domain)) for domain in domains['f8']]
     return results
 
 

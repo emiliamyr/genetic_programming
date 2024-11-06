@@ -8,8 +8,8 @@ public class TinyGP {
     private final char[][] population;
     private static final Random random = new Random();
 
-    private static final int ADD = 110, SUB = 111, MUL = 112, DIV = 113;
-    private static final int FSET_START = ADD, FSET_END = DIV;
+    private static final int ADD = 110, SUB = 111, MUL = 112, DIV = 113, SIN = 114, COS = 115;
+    private static final int FSET_START = ADD, FSET_END = COS;
 
     private static final int MAX_LEN = 100, POP_SIZE = 1000, DEPTH = 2, GENERATIONS = 100, TOURNAMENT_SIZE = 2;
     private static final double PMUT_PER_NODE = 0.05, CROSSOVER_PROB = 0.9;
@@ -159,21 +159,36 @@ public class TinyGP {
 
     int growProgram(int position, int maxLength, int depth) {
         if (position >= maxLength) return -1;
-        char primitive = (position == 0) ? 1: (char) random.nextInt(2);
+        char primitive = (position == 0) ? 1 : (char) random.nextInt(2);
 
-        if ( primitive == 0 || depth == 0 ) {
+        if (primitive == 0 || depth == 0) {
             primitive = (char) random.nextInt(variableCount + randomConstantCount);
             buffer[position] = primitive;
             return position + 1;
-        }
-        else  {
+        } else {
             primitive = (char) (random.nextInt(FSET_END - FSET_START + 1) + FSET_START);
             buffer[position] = primitive;
+
+
             int childPos = growProgram(position + 1, maxLength, depth + 1);
+            if (primitive == ADD || primitive == MUL || primitive == SUB) {
+
+                if (primitive == ADD) {
+                    if (buffer[position + 1] == 0) {
+                        return childPos;
+                    }
+                }
+                if (primitive == MUL) {
+                    if (buffer[position + 1] == 1) {
+                        return childPos;
+                    }
+                }
+            }
             if (childPos < 0) return -1;
             return growProgram(childPos, maxLength, depth - 1);
         }
     }
+
 
     private double calculateFitness(char[] program){
         double fitnessScore = 0.0;
@@ -192,20 +207,53 @@ public class TinyGP {
 
     private double evaluateProgram() {
         char primitive = program[programCounter++];
-        if ( primitive < FSET_START )
-            return inputs[primitive];
 
-        return switch (primitive) {
-            case ADD -> evaluateProgram() + evaluateProgram();
-            case SUB -> evaluateProgram() - evaluateProgram();
-            case MUL -> evaluateProgram() * evaluateProgram();
-            case DIV -> {
-                double num = evaluateProgram(), den = evaluateProgram();
-                yield (Math.abs(den) <= 0.001) ? num : num / den;
-            }
-            default -> 0.0;
-        };
+
+        if (primitive < FSET_START) {
+            return inputs[primitive];
+        }
+
+        switch (primitive) {
+            case ADD:
+                double leftAdd = evaluateProgram();
+                double rightAdd = evaluateProgram();
+                if (rightAdd == 0) return leftAdd;
+                if (leftAdd == 0) return rightAdd;
+                return leftAdd + rightAdd;
+
+            case SUB:
+                double leftSub = evaluateProgram();
+                double rightSub = evaluateProgram();
+                if (rightSub == 0) return leftSub;
+                return leftSub - rightSub;
+
+            case MUL:
+                double leftMul = evaluateProgram();
+                double rightMul = evaluateProgram();
+                if (leftMul == 0 || rightMul == 0) return 0;
+                if (leftMul == 1) return rightMul;
+                if (rightMul == 1) return leftMul;
+                return leftMul * rightMul;
+
+            case DIV:
+                double leftDiv = evaluateProgram();
+                double rightDiv = evaluateProgram();
+                if (Math.abs(rightDiv) <= 0.001) {
+                    return leftDiv;
+                }
+                return leftDiv / rightDiv;
+
+
+            case SIN:
+                return Math.sin(evaluateProgram());
+            case COS:
+                return Math.cos(evaluateProgram());
+
+            default:
+                return 0.0;
+        }
     }
+
 
     private int traverseProgram(char[] program, int index){
         if (program[index] < FSET_START) return ++index;
@@ -215,6 +263,9 @@ public class TinyGP {
             case MUL:
             case DIV:
                 return traverseProgram(program, traverseProgram(program, ++index));
+            case SIN:
+            case COS:
+                return traverseProgram(program, ++index); // Funkcje jednoargumentowe
             default:
                 return 0;
         }
@@ -243,118 +294,63 @@ public class TinyGP {
         return selected;
     }
 
-    private void reportPopulationStatistics(int generation){
-        int nodeCount = 0;
-        int bestIndividualIndex = random.nextInt(POP_SIZE);
-        bestFitnessInPopulation = fitness[bestIndividualIndex];
-        averageFitnessInPopulation = 0.0;
-
-        for (int i = 0; i < POP_SIZE; i++){
-            nodeCount += traverseProgram(population[i], 0);
-            averageFitnessInPopulation += fitness[i];
-            if (fitness[i] > bestFitnessInPopulation){
-                bestIndividualIndex = i;
-                bestFitnessInPopulation = fitness[i];
-            }
-        }
-
-        averageProgramLength = (double) nodeCount / POP_SIZE;
-        averageFitnessInPopulation /= POP_SIZE;
-
-        JSONObject generationData = new JSONObject();
-        generationData.put("generation", generation);
-        generationData.put("avg_fitness", -averageFitnessInPopulation);
-        generationData.put("best_fitness", -bestFitnessInPopulation);
-        generationData.put("avg_program_length", averageProgramLength);
-
-        String bestIndividualString = individualToString(population[bestIndividualIndex], 0);
-        generationData.put("best_individual", bestIndividualString);
-
-        generationsData.put(generationData);
-    }
-
-    private String individualToString(char[] program, int index) {
-        StringBuilder sb = new StringBuilder();
-
-        if (program[index] < FSET_START) {
-            if (program[index] < variableCount) {
-                sb.append("X").append(program[index] + 1).append(" ");
-            } else {
-                sb.append(inputs[program[index]]).append(" ");
-            }
-            return sb.toString();
-        }
-
-        switch (program[index]) {
-            case ADD:
-                sb.append("(");
-                sb.append(individualToString(program, index + 1));
-                sb.append(" + ");
-                break;
-            case SUB:
-                sb.append("(");
-                sb.append(individualToString(program, index + 1));
-                sb.append(" - ");
-                break;
-            case MUL:
-                sb.append("(");
-                sb.append(individualToString(program, index + 1));
-                sb.append(" * ");
-                break;
-            case DIV:
-                sb.append("(");
-                sb.append(individualToString(program, index + 1));
-                sb.append(" / ");
-                break;
-        }
-
-        sb.append(individualToString(program, traverseProgram(program, index + 1)));
-        sb.append(")");
-        return sb.toString();
-    }
-
-    private char[] crossover(char[] parent1, char[] parent2) {
-        int parent1Start = random.nextInt(traverseProgram(parent1, 0));
-        int parent1End = traverseProgram(parent1, parent1Start);
-        int parent2Start = random.nextInt(traverseProgram(parent2, 0));
-        int parent2End = traverseProgram(parent2, parent2Start);
-
-        int offspringLength = parent1Start + (parent2End - parent2Start) + (traverseProgram(parent1, 0) - parent1End);
-        char[] offspring = new char[offspringLength];
-
-        System.arraycopy(parent1, 0, offspring, 0, parent1Start);
-        System.arraycopy(parent2, parent2Start, offspring, parent1Start, (parent2End - parent2Start));
-        System.arraycopy(parent1, parent1End, offspring, parent1Start + (parent2End - parent2Start), (traverseProgram(parent1, 0) - parent1End));
-
+    private char[] crossover(char[] parent1, char[] parent2){
+        int crossoverPoint = random.nextInt(parent1.length);
+        char[] offspring = new char[parent1.length];
+        System.arraycopy(parent1, 0, offspring, 0, crossoverPoint);
+        System.arraycopy(parent2, crossoverPoint, offspring, crossoverPoint, parent2.length - crossoverPoint);
         return offspring;
     }
 
-    private char[] mutate(char[] parent, double mutationProbability) {
-        int length = traverseProgram(parent, 0);
-        char[] offspring = new char[length];
-        System.arraycopy(parent, 0, offspring, 0, length);
-
-        for (int i = 0; i < length; i++) {
+    private char[] mutate(char[] program, double mutationProbability) {
+        char[] mutatedProgram = Arrays.copyOf(program, program.length);
+        for (int i = 0; i < mutatedProgram.length; i++) {
             if (random.nextDouble() < mutationProbability) {
-                if (offspring[i] < FSET_START) {
-                    offspring[i] = (char) random.nextInt(variableCount + randomConstantCount);
-                } else {
-                    offspring[i] = (char) (random.nextInt(FSET_END - FSET_START + 1) + FSET_START);
+                int newOp = random.nextInt(FSET_END - FSET_START + 1 + variableCount);
+                if (newOp == ADD || newOp == MUL) {
+                    int operand = random.nextInt(variableCount + randomConstantCount);
+                    if (operand == 0) continue;
+                    if (newOp == MUL && operand == 1) continue;
                 }
+                mutatedProgram[i] = (char) newOp;
             }
         }
-
-        return offspring;
+        return mutatedProgram;
     }
 
-    private static char[] buffer = new char[MAX_LEN];
 
-    public void saveOutputToJson(String filename) {
-        try (FileWriter file = new FileWriter(filename)) {
-            file.write(generationsData.toString(4));
-            System.out.println("Zapisano dane do pliku " + filename);
-        } catch (IOException e) {
-            e.printStackTrace();
+    void saveOutputToJson(String fileName){
+        try (PrintWriter writer = new PrintWriter(new File(fileName))){
+            writer.println(generationsData.toString());
+        } catch (FileNotFoundException e){
+            System.out.println("ERROR: File cannot be saved.");
         }
     }
-};
+
+    private void reportPopulationStatistics(int generation){
+        double sumFitness = 0.0;
+        double sumProgramLength = 0.0;
+        for (int i = 0; i < POP_SIZE; i++){
+            sumFitness += fitness[i];
+            sumProgramLength += population[i].length;
+        }
+        averageFitnessInPopulation = sumFitness / POP_SIZE;
+        averageProgramLength = sumProgramLength / POP_SIZE;
+
+        if (generation % 10 == 0){
+            generationsData.put(createGenerationStats(generation));
+        }
+
+        System.out.printf("Generation %d -> Best: %.2f, Average: %.2f, AvgLength: %.2f%n",
+                generation, bestFitnessInPopulation, averageFitnessInPopulation, averageProgramLength);
+    }
+
+    private JSONObject createGenerationStats(int generation){
+        JSONObject stats = new JSONObject();
+        stats.put("generation", generation);
+        stats.put("bestFitness", bestFitnessInPopulation);
+        stats.put("averageFitness", averageFitnessInPopulation);
+        stats.put("averageProgramLength", averageProgramLength);
+        return stats;
+    }
+}
