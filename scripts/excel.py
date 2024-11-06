@@ -85,10 +85,16 @@ def generate_data_for_different_domains():
             (np.linspace(-1000, 1000, 50), np.linspace(-1000, 1000, 50)),
         ],
         "f7":[
-            (np.linspace(-3.14, 3.14, 100))
+            np.linspace(-3.14, 3.14, 100),
+            np.linspace(0, 7, 100),
+            np.linspace(0, 100, 100),
+            np.linspace(-100, 100, 100),
         ],
         "f8":[
-            (np.linspace(-3.14, 3.14, 100))
+            np.linspace(-3.14, 3.14, 100),
+            np.linspace(0, 7, 100),
+            np.linspace(0, 100, 100),
+            np.linspace(-100, 100, 100),
         ]
     }
 
