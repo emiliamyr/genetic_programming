@@ -1,0 +1,107 @@
+[
+    {
+        "generation": 0,
+        "avg_program_length": 7.431,
+        "best_individual": "cos((X1  + 6.9323218878209545 ))",
+        "avg_fitness": 26333.991212319463,
+        "best_fitness": 9.415453053316838
+    },
+    {
+        "generation": 1,
+        "avg_program_length": 8.283,
+        "best_individual": "cos((X1  + 6.9323218878209545 ))",
+        "avg_fitness": 2758.608458442298,
+        "best_fitness": 9.415453053316838
+    },
+    {
+        "generation": 2,
+        "avg_program_length": 13.524,
+        "best_individual": "cos((X1  + 6.9323218878209545 ))",
+        "avg_fitness": 334.33885464398054,
+        "best_fitness": 9.415453053316838
+    },
+    {
+        "generation": 3,
+        "avg_program_length": 18.221,
+        "best_individual": "cos((X1  + 6.9323218878209545 ))",
+        "avg_fitness": 383.63411254356276,
+        "best_fitness": 9.415453053316838
+    },
+    {
+        "generation": 4,
+        "avg_program_length": 21.607,
+        "best_individual": "cos((X1  + 6.9323218878209545 ))",
+        "avg_fitness": 179.395995505927,
+        "best_fitness": 9.415453053316838
+    },
+    {
+        "generation": 5,
+        "avg_program_length": 22.998,
+        "best_individual": "cos((X1  + sin(sin((cos(7.07312726913208 ) * cos(cos((X1  + 6.9323218878209545 ))))))))",
+        "avg_fitness": 157.0079970732336,
+        "best_fitness": 4.4658367299651855
+    },
+    {
+        "generation": 6,
+        "avg_program_length": 20.066,
+        "best_individual": "cos((X1  + sin(-9.931912144434616 )))",
+        "avg_fitness": 191.79854284858519,
+        "best_fitness": 0.908229221000679
+    },
+    {
+        "generation": 7,
+        "avg_program_length": 17.118,
+        "best_individual": "cos((X1  + sin(-9.931912144434616 )))",
+        "avg_fitness": 156.14279388552634,
+        "best_fitness": 0.908229221000679
+    },
+    {
+        "generation": 8,
+        "avg_program_length": 19.235,
+        "best_individual": "cos((X1  + sin(-9.931912144434616 )))",
+        "avg_fitness": 157.85336535392196,
+        "best_fitness": 0.908229221000679
+    },
+    {
+        "generation": 9,
+        "avg_program_length": 22.009,
+        "best_individual": "cos((X1  + sin(-9.931912144434616 )))",
+        "avg_fitness": 108.78203019496121,
+        "best_fitness": 0.908229221000679
+    },
+    {
+        "generation": 10,
+        "avg_program_length": 26.222,
+        "best_individual": "cos((X1  + sin(sin((cos(7.07312726913208 ) * cos(cos(sin(sin(((4.78977481290328  / -3.059104455211057 ) - (7.07312726913208  * -3.059104455211057 )))))))))))",
+        "avg_fitness": 62.96372885092813,
+        "best_fitness": 0.4135115467658871
+    },
+    {
+        "generation": 11,
+        "avg_program_length": 30.804,
+        "best_individual": "cos((X1  + sin(sin((cos(7.07312726913208 ) * cos(cos(sin(sin(((4.78977481290328  / -3.059104455211057 ) - (7.07312726913208  * -3.059104455211057 )))))))))))",
+        "avg_fitness": 54.946849451757984,
+        "best_fitness": 0.4135115467658871
+    },
+    {
+        "generation": 12,
+        "avg_program_length": 36.961,
+        "best_individual": "cos((X1  + sin(sin((cos(7.07312726913208 ) * cos(cos(sin(sin(((4.78977481290328  / -3.059104455211057 ) - (7.07312726913208  * -3.059104455211057 )))))))))))",
+        "avg_fitness": 37.48213122655032,
+        "best_fitness": 0.4135115467658871
+    },
+    {
+        "generation": 13,
+        "avg_program_length": 41.146,
+        "best_individual": "cos((X1  + sin(0.5290106422087053 )))",
+        "avg_fitness": 61.02262953679837,
+        "best_fitness": 0.29654003329709205
+    },
+    {
+        "generation": 14,
+        "avg_program_length": 49.013,
+        "best_individual": "cos((X1  + sin(cos(((0.30964456013011166  - ((0.5290106422087053  / cos(((cos(cos(0.5290106422087053 )) * sin(cos(X1 ))) / 9.74723251856551 ))) + (0.31113859580876735  * 0.31113859580876735 ))) - cos(7.07312726913208 ))))))",
+        "avg_fitness": 43.55160379548004,
+        "best_fitness": 0.03359671073685665
+    }
+]

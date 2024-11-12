@@ -1,0 +1,44 @@
+[
+    {
+        "generation": 0,
+        "avg_program_length": 7.416,
+        "best_individual": "sin((X1  - (-3.225540936434985  - 3.5398811798632845 )))",
+        "avg_fitness": 2731.014492923489,
+        "best_fitness": 35.077557866700445
+    },
+    {
+        "generation": 1,
+        "avg_program_length": 6.963,
+        "best_individual": "sin((((X1  - 3.5398811798632845 ) + (2.1067085015705107  + 3.5398811798632845 )) - -4.818582785027658 ))",
+        "avg_fitness": 268.120119519591,
+        "best_fitness": 28.618266616860563
+    },
+    {
+        "generation": 2,
+        "avg_program_length": 7.5,
+        "best_individual": "sin((((X1  - 3.5398811798632845 ) + (2.1067085015705107  + 3.5398811798632845 )) - -4.818582785027658 ))",
+        "avg_fitness": 207.4588919394105,
+        "best_fitness": 28.618266616860563
+    },
+    {
+        "generation": 3,
+        "avg_program_length": 7.95,
+        "best_individual": "sin((-4.818582785027658  - (cos(cos(X1 )) - (X1  + (sin(-3.225540936434985 ) / 4.898973383147183 )))))",
+        "avg_fitness": 135.68638946079824,
+        "best_fitness": 19.516206844332512
+    },
+    {
+        "generation": 4,
+        "avg_program_length": 7.885,
+        "best_individual": "(sin(X1 ) - (((9.480620543150572  + -4.818582785027658 ) * cos(((3.5398811798632845  * ((sin(cos(3.5398811798632845 )) + -3.225540936434985 ) / -4.966617246504232 )) - X1 ))) / 4.898973383147183 ))",
+        "avg_fitness": 108.85175217620203,
+        "best_fitness": 17.206349776986904
+    },
+    {
+        "generation": 5,
+        "avg_program_length": 8.575,
+        "best_individual": "(sin(X1 ) + cos(X1 ))",
+        "avg_fitness": 81.9937355623284,
+        "best_fitness": 1.2212453270876722E-15
+    }
+]

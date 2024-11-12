@@ -1,0 +1,58 @@
+[
+    {
+        "generation": 0,
+        "avg_program_length": 7.456,
+        "best_individual": "(X2  + cos(cos(-8.13672908704711 )))",
+        "avg_fitness": 136611.51410704726,
+        "best_fitness": 853.7227641489294
+    },
+    {
+        "generation": 1,
+        "avg_program_length": 6.179,
+        "best_individual": "(X2  + cos(cos(-8.13672908704711 )))",
+        "avg_fitness": 7432.00873806677,
+        "best_fitness": 853.7227641489294
+    },
+    {
+        "generation": 2,
+        "avg_program_length": 5.991,
+        "best_individual": "(X2  + cos((sin((sin(cos(sin(-6.394225355119747 ))) * X1 )) + 5.429794039293604 )))",
+        "avg_fitness": 4012.1316805798406,
+        "best_fitness": 771.5715964156678
+    },
+    {
+        "generation": 3,
+        "avg_program_length": 6.554,
+        "best_individual": "(X2  + (sin(0.7336151921485055 ) + X2 ))",
+        "avg_fitness": 3766.879737212644,
+        "best_fitness": 708.0963555314207
+    },
+    {
+        "generation": 4,
+        "avg_program_length": 7.138,
+        "best_individual": "(((3.5196090226148904  / ((1.7796641164123468  / X2 ) - (sin(cos(5.429794039293604 )) / 9.786153107669303 ))) + 0.7336151921485055 ) + ((X2  * X1 ) - 0.7336151921485055 ))",
+        "avg_fitness": 4924.559916672397,
+        "best_fitness": 662.3221558675218
+    },
+    {
+        "generation": 5,
+        "avg_program_length": 8.581,
+        "best_individual": "((X2  - sin(cos((9.786153107669303  / -4.590671461915743 )))) + X1 )",
+        "avg_fitness": 3630.397322216209,
+        "best_fitness": 637.7551020408152
+    },
+    {
+        "generation": 6,
+        "avg_program_length": 9.918,
+        "best_individual": "(((3.5196090226148904  / ((1.7796641164123468  / X2 ) - (sin(cos(5.429794039293604 )) / 9.786153107669303 ))) + 0.7336151921485055 ) + ((X2  * X1 ) - X2 ))",
+        "avg_fitness": 3499.856381314495,
+        "best_fitness": 540.988836620548
+    },
+    {
+        "generation": 7,
+        "avg_program_length": 12.521,
+        "best_individual": "(X2  + (X2  + X1 ))",
+        "avg_fitness": 5328.148962159121,
+        "best_fitness": 1.0881573420107316E-13
+    }
+]

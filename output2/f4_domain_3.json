@@ -1,0 +1,23 @@
+[
+    {
+        "generation": 0,
+        "avg_program_length": 7.709,
+        "best_individual": "(2.823934029272177  * X2 )",
+        "avg_fitness": 4064274.729446945,
+        "best_fitness": 80091.64938239158
+    },
+    {
+        "generation": 1,
+        "avg_program_length": 7.896,
+        "best_individual": "((X2  - -4.999435865095281 ) / cos(-7.464548228480239 ))",
+        "avg_fitness": 823047.7024287271,
+        "best_fitness": 72952.57276404863
+    },
+    {
+        "generation": 2,
+        "avg_program_length": 8.872,
+        "best_individual": "((X1  + X2 ) + X2 )",
+        "avg_fitness": 350840.26232336427,
+        "best_fitness": 1.1723955140041653E-11
+    }
+]

@@ -4,8 +4,8 @@ import java.util.List;
 
 public class TinyGPBatchRunner {
 
-    private static final String SCRIPTS_FOLDER = "C:\\Users\\Gabrysia\\IdeaProjects\\genetic_programmingvol2\\scripts\\data";
-    private static final String OUTPUT_FOLDER = "../output2";
+    private static final String SCRIPTS_FOLDER = "..\\scripts\\data";
+    private static final String OUTPUT_FOLDER = "..\\output2";
     private static final long DEFAULT_SEED = -1;
 
     public static void main(String[] args) {
