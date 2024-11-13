@@ -1,0 +1,4 @@
+{
+    "original": "(cos(X1 ) + sin(X1 ))",
+    "simplified": "cos(x1) + sin(x1)"
+}
