@@ -9,7 +9,7 @@ def f5(x, y):
     return x ** 2 + 3 * x * y - 7 * y + 1
 
 # Wczytaj dane JSON z pliku
-file_path = "..\\output\\f6_domain_3.json"
+file_path = "..\\output2\\f6_domain_1.json"
 with open(file_path, "r") as file:
     data = json.load(file)
 
@@ -21,8 +21,8 @@ best_individual_expr = last_generation["best_individual"]
 print("Best Individual Expression:", best_individual_expr)
 
 # Zdefiniuj dziedziny X i Y
-X_values = np.linspace(-1, 1, 50)
-Y_values = np.linspace(-1, 1, 50)
+X_values = np.linspace(-10, 10, 50)
+Y_values = np.linspace(-10, 10, 50)
 X_grid, Y_grid = np.meshgrid(X_values, Y_values)
 
 # Ocen funkcję referencyjną
@@ -126,8 +126,8 @@ legend_elements = [
 ax.legend(handles=legend_elements, loc='upper right')
 
 # Określenie katalogu i nazwy pliku do zapisania wykresu
-directory = "..\\plotting"
-filename = "f6_comp_domain_3.png"
+directory = "..\\plotting2"
+filename = "f6_comp_domain_1.png"
 full_path = os.path.join(directory, filename)
 
 # Upewnij się, że katalog istnieje
@@ -140,5 +140,3 @@ plt.savefig(full_path, format='png', dpi=300, bbox_inches='tight')
 plt.show()
 
 print(f"Plot saved at: {full_path}")
-
-
