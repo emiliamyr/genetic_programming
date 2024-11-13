@@ -26,7 +26,7 @@ public class TinyGP {
     private static double averageProgramLength;
     private static double[][] targetData;
 
-    private JSONArray generationsData;
+    private final JSONArray generationsData;
 
     public TinyGP(String fileName, long seedValue){
         fitness = new double[POP_SIZE];
@@ -375,13 +375,14 @@ public class TinyGP {
         return offspring;
     }
 
-    private static char[] buffer = new char[MAX_LEN];
+    private final static char[] buffer = new char[MAX_LEN];
 
     public void saveOutputToJson(String filename) {
         try (FileWriter file = new FileWriter(filename)) {
             file.write(generationsData.toString(4));
-            System.out.println("Zapisano dane do pliku " + filename);
+            System.out.println("Output successfully written to file: " + filename);
         } catch (IOException e) {
+            System.out.println("Failed to save output to " + filename);
             e.printStackTrace();
         }
     }

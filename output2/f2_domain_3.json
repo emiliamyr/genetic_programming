@@ -1,0 +1,72 @@
+[
+    {
+        "generation": 0,
+        "avg_program_length": 7.28,
+        "best_individual": "cos((-6.984986150777129  + X1 ))",
+        "avg_fitness": 43784.930520907204,
+        "best_fitness": 27.076352125932857
+    },
+    {
+        "generation": 1,
+        "avg_program_length": 6.479,
+        "best_individual": "cos((-6.984986150777129  + X1 ))",
+        "avg_fitness": 1539.8978005796166,
+        "best_fitness": 27.076352125932857
+    },
+    {
+        "generation": 2,
+        "avg_program_length": 6.945,
+        "best_individual": "sin((sin(sin(cos(sin(X1 )))) + X1 ))",
+        "avg_fitness": 283.8562146958274,
+        "best_fitness": 24.956135576519436
+    },
+    {
+        "generation": 3,
+        "avg_program_length": 7.696,
+        "best_individual": "cos((X1  - cos(cos(X1 ))))",
+        "avg_fitness": 283.23857705304926,
+        "best_fitness": 17.980024017856266
+    },
+    {
+        "generation": 4,
+        "avg_program_length": 7.988,
+        "best_individual": "cos((X1  - cos(cos(X1 ))))",
+        "avg_fitness": 300.450958322022,
+        "best_fitness": 17.980024017856266
+    },
+    {
+        "generation": 5,
+        "avg_program_length": 8.677,
+        "best_individual": "(sin(cos((sin(7.43860323904649 ) - X1 ))) / sin(sin(cos(sin(9.134945656341543 )))))",
+        "avg_fitness": 228.6692806709125,
+        "best_fitness": 17.936074380738837
+    },
+    {
+        "generation": 6,
+        "avg_program_length": 9.904,
+        "best_individual": "(sin(cos((sin(7.43860323904649 ) - X1 ))) / sin(sin(cos(sin(9.134945656341543 )))))",
+        "avg_fitness": 232.11487634804328,
+        "best_fitness": 17.936074380738837
+    },
+    {
+        "generation": 7,
+        "avg_program_length": 12.022,
+        "best_individual": "(sin(cos((sin(7.43860323904649 ) - X1 ))) / sin(sin(cos(cos(sin(sin(sin(8.28311095727533 ))))))))",
+        "avg_fitness": 113.61619262093444,
+        "best_fitness": 11.864194384062204
+    },
+    {
+        "generation": 8,
+        "avg_program_length": 13.401,
+        "best_individual": "(sin(cos((sin(7.43860323904649 ) - X1 ))) / sin(sin(cos(sin(sin(cos((X1  - cos(cos((X1  + cos(7.510602822475477 ))))))))))))",
+        "avg_fitness": 131.5239256719106,
+        "best_fitness": 10.771853997287334
+    },
+    {
+        "generation": 9,
+        "avg_program_length": 14.958,
+        "best_individual": "(cos(X1 ) + sin(X1 ))",
+        "avg_fitness": 97.96960493933757,
+        "best_fitness": 5.551115123125783E-16
+    }
+]
