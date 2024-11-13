@@ -1,0 +1,4 @@
+{
+    "original": "(X2  + (X2  + X1 ))",
+    "simplified": "x1 + 2 * x2"
+}
