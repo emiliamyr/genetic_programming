@@ -5,26 +5,26 @@ import matplotlib.pyplot as plt
 import sympy as sp
 
 def f5(x):
-    return np.sin(x) + np.cos(x)
+    return np.sin(x / 2) + 2 * np.cos(x)
 
-file_path = "..\\simp2\\f2_d2_s.json"
+# Wczytanie pliku JSON
+file_path = "..\\output\\f5_domain_4.json"
 with open(file_path, "r") as file:
     data = json.load(file)
 
-#last_generation = data[-1]
-#best_individual_expr = last_generation["best_individual"]
-best_individual_expr = data["simplified"]
+last_generation = data[-1]
+best_individual_expr = last_generation["best_individual"]
 
 print("Best Individual Expression:", best_individual_expr)
 
-# dziedzina
-X_values = np.linspace(-3.14, 3.14, 100)
-
+# Dziedzina
+X_values = np.linspace(-100, 100, 100)
 Y_values_ref = f5(X_values)
 
 fig, ax = plt.subplots(figsize=(10, 6))
 
-ax.plot(X_values, Y_values_ref, color='blue', label='Reference Function (f2(x))')
+# Wykres funkcji referencyjnej
+ax.plot(X_values, Y_values_ref, color='blue', label='Reference Function (f5(x))')
 
 x = sp.symbols('x')
 
@@ -35,13 +35,19 @@ except Exception as e:
     print(f"Error parsing expression: {e}")
     expr = None
 
+# Funkcja pomocnicza do bezpiecznego obliczania wartości z obsługą dzielenia przez zero
 def safe_eval(expr, x_val):
     try:
-        value = expr.subs(x, x_val)
-        if value.is_real:
-            return float(value)
+        numerator, denominator = sp.fraction(expr)
+        den_val = denominator.subs(x, x_val)
+        if den_val == 0:
+            # Jeśli mamy dzielenie przez zero, zwróć tylko licznik
+            num_val = numerator.subs(x, x_val)
+            return float(num_val) if num_val.is_real else 0.0
         else:
-            return 0.0
+            # Jeśli nie ma dzielenia przez zero, zwróć wartość całego wyrażenia
+            value = expr.subs(x, x_val)
+            return float(value) if value.is_real else 0.0
     except ZeroDivisionError:
         print(f"ZeroDivisionError at x={x_val}")
         return 0.0
@@ -52,6 +58,7 @@ def safe_eval(expr, x_val):
 if expr:
     Y_values_best = np.array([safe_eval(expr, x_val) for x_val in X_values])
 
+    # Wykres najlepszego osobnika ostatniej generacji
     ax.plot(X_values, Y_values_best, color='red', linestyle='--', label='Best Individual - Last Generation')
 else:
     print("Expression parsing failed. Skipping the best individual plotting.")
@@ -61,8 +68,9 @@ ax.set_xlabel("X")
 ax.set_ylabel("Function Value")
 ax.legend()
 
-directory = "..\\plotting2"
-filename = "f2_comp_domain_2.png"
+# Zapis wykresu do pliku
+directory = "..\\plotting"
+filename = "f5_comp_domain_4.png"
 full_path = os.path.join(directory, filename)
 
 os.makedirs(directory, exist_ok=True)
