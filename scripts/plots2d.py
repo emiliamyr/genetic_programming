@@ -1,79 +1,79 @@
+import json
 import numpy as np
 import os
-import json
-import sympy as sp
-import numpy as np
 import matplotlib.pyplot as plt
-import re
+import sympy as sp
 
-# Funkcja referencyjna
 def f5(x):
-    return 2 * np.log(x + 1)
+    return np.sin(x / 2) + 2 * np.cos(x)
 
-# Wczytanie danych z JSON
-file_path = "..\\output\\f3_domain_4.json"
+# Wczytanie pliku JSON
+file_path = "..\\output\\f5_domain_4.json"
 with open(file_path, "r") as file:
     data = json.load(file)
 
-# Pobranie ostatniego pokolenia
 last_generation = data[-1]
 best_individual_expr = last_generation["best_individual"]
 
-# Funkcja do uproszczenia wyrażenia i kontroli dzielenia
-def preprocess_expression(expr):
-    expr = re.sub(r'\(\s*([^()]+)\s*\)', r'\1', expr)  # Usunięcie nadmiaru nawiasów wokół prostych elementów
-    expr = re.sub(r'\s+', '', expr)  # Usunięcie zbędnych białych znaków
-    return expr
+print("Best Individual Expression:", best_individual_expr)
 
-def safe_eval_expr(expr, x_value, tolerance=0.001):
-    x = sp.symbols('x')
-    parsed_expr = sp.sympify(expr)
+# Dziedzina
+X_values = np.linspace(-100, 100, 100)
+Y_values_ref = f5(X_values)
+
+fig, ax = plt.subplots(figsize=(10, 6))
+
+# Wykres funkcji referencyjnej
+ax.plot(X_values, Y_values_ref, color='blue', label='Reference Function (f5(x))')
+
+x = sp.symbols('x')
+
+try:
+    expr = sp.sympify(best_individual_expr.replace("X1", "x"))
+    print(f"Parsed Expression: {expr}")
+except Exception as e:
+    print(f"Error parsing expression: {e}")
+    expr = None
+
+# Funkcja pomocnicza do bezpiecznego obliczania wartości z obsługą dzielenia przez zero
+def safe_eval(expr, x_val):
     try:
-        # Podstawienie wartości
-        simplified_expr = sp.simplify(parsed_expr.subs(x, x_value))
-
-        # Rozdzielenie wyrażenia na licznik i mianownik
-        num, den = simplified_expr.as_numer_denom()
-        num_val = num.evalf(subs={x: x_value})
-        den_val = den.evalf(subs={x: x_value})
-
-        # Kontrola dzielenia, aby uniknąć błędów przy bliskich zero mianownikach
-        if abs(den_val) < tolerance:
-            return float(num_val)  # Zwraca licznik, gdy mianownik jest bliski zera
+        numerator, denominator = sp.fraction(expr)
+        den_val = denominator.subs(x, x_val)
+        if den_val == 0:
+            # Jeśli mamy dzielenie przez zero, zwróć tylko licznik
+            num_val = numerator.subs(x, x_val)
+            return float(num_val) if num_val.is_real else 0.0
         else:
-            return float(num_val / den_val)  # Zwraca wynik dzielenia, jeśli mianownik jest wystarczająco duży
-
+            # Jeśli nie ma dzielenia przez zero, zwróć wartość całego wyrażenia
+            value = expr.subs(x, x_val)
+            return float(value) if value.is_real else 0.0
+    except ZeroDivisionError:
+        print(f"ZeroDivisionError at x={x_val}")
+        return 0.0
     except Exception as e:
-        print(f"Błąd przy obliczaniu dla x={x_value}: {e}")
-        return np.nan
+        print(f"Error evaluating expression at x = {x_val}: {e}")
+        return 0.0
 
-# Przetwarzanie wyrażenia i ewaluacja
-best_individual_expr = preprocess_expression(best_individual_expr)
+if expr:
+    Y_values_best = np.array([safe_eval(expr, x_val) for x_val in X_values])
 
-X_values = np.linspace(0, 999, 100)
-y_values = []
+    # Wykres najlepszego osobnika ostatniej generacji
+    ax.plot(X_values, Y_values_best, color='red', linestyle='--', label='Best Individual - Last Generation')
+else:
+    print("Expression parsing failed. Skipping the best individual plotting.")
 
-for x_val in X_values:
-    y = safe_eval_expr(best_individual_expr, x_val)
-    y_values.append(y)
+ax.set_title("Comparison of Last Generation's Best Individual with Reference Function")
+ax.set_xlabel("X")
+ax.set_ylabel("Function Value")
+ax.legend()
 
-# Generowanie wykresu
-y_values = np.array(y_values)
-plt.figure(figsize=(12, 8))
-plt.plot(X_values, f5(X_values), label='Funkcja odniesienia f5(x)', color='blue', linewidth=2)
-plt.plot(X_values, y_values, label='TinyGP', linestyle='--', color='red')
-plt.xlabel("X")
-plt.ylabel("Wartość funkcji")
-plt.legend()
-plt.grid(True)
-plt.show()
-
-# Zapis wykresu
+# Zapis wykresu do pliku
 directory = "..\\plotting"
-filename = "f3_comp_domain_4.png"
+filename = "f5_comp_domain_4.png"
 full_path = os.path.join(directory, filename)
+
 os.makedirs(directory, exist_ok=True)
 plt.savefig(full_path, format='png', dpi=300, bbox_inches='tight')
 plt.show()
-
-print(f"Wykres zapisano w: {full_path}")
+print(f"Plot saved at: {full_path}")

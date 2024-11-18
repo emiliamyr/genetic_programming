@@ -44,8 +44,6 @@ def plot_avg_fitness_for_each_file(df):
         plt.ylabel('Average Fitness')
         plt.legend(loc="best")
         plt.grid(True)
-
-        # Save plot to file
         save_plot(plt, f"{file_name}_avg_fitness.png")
 
 def plot_best_fitness_for_each_file(df):
@@ -60,8 +58,6 @@ def plot_best_fitness_for_each_file(df):
         plt.ylabel('Best Fitness')
         plt.legend(loc="best")
         plt.grid(True)
-
-        # Save plot to file
         save_plot(plt, f"{file_name}_best_fitness.png")
 
 def plot_avg_program_length_for_each_file(df):
@@ -83,6 +79,6 @@ create_plots_folder(PLOTS_FOLDER)
 
 df = load_json_data(OUTPUT_FOLDER)
 
-lot_avg_fitness_for_each_file(df)
+plot_avg_fitness_for_each_file(df)
 plot_best_fitness_for_each_file(df)
 plot_avg_program_length_for_each_file(df)
